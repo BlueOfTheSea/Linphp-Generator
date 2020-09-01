@@ -1,11 +1,13 @@
 <?php
 
 namespace Linphp\ServiceController\command;
+
 use Nette\PhpGenerator\PhpFile;
 use think\console\input\Option;
 use think\facade\Db;
 use think\facade\Request;
 use app\BaseController;
+
 /**
  * Class ControllerGenerator
  * @package Linphp\ServiceController\command
@@ -13,10 +15,10 @@ use app\BaseController;
 class ServiceGenerator
 {
     /**
-     * @author Administrator
      * @param string $modular
      * @param string $controller
      * @param string $tableName
+     * @author Administrator
      */
     public function command($modular = '', $controller = '', $tableName = '')
     {
@@ -36,8 +38,10 @@ class ServiceGenerator
         $file->setStrictTypes(); // adds declare(strict_types=1)
         $namespace = $file->addNamespace('app\\' . $modular . '\service');
         $namespace->addUse('app\BaseController');
+        $model_class = $controller . 'Model';
+        $namespace->addUse('app\index\model\\' . $model_class);
         $namespace->addUse('\think\facade\Request');
-        $namespace->addUse('\think\facade\Db');
+        $namespace->addUse('\Linphp\ServiceController\notice\\Msg');
         $class = $namespace->addClass($tableName_public_name);
         $class->addExtend(BaseController::class);
         #class内部注解
@@ -46,62 +50,38 @@ class ServiceGenerator
             ->addComment('@author Administrator')
             ->addComment('@return mixed')
             ->setPublic()
-            ->setBody('$list = Db::name(\'user\')->where(\'status\',1)->order(\'id\', \'desc\')->paginate(10); if($list){return true;}else{return false;}')
-            ->addParameter('request')
-            ->setType(Request::class); // it will resolve to \Bar\OtherClass
-        $class->addMethod('create')
-            ->addComment('显示创建资源表单页.')
-            ->addComment('@author Administrator')
-            ->addComment('@return mixed')
-            ->setPublic()
-            ->setBody('#逻辑自己编写')
-            ->addParameter('request')
-            ->setType(Request::class); // it will resolve to \Bar\OtherClass;
+            ->setBody('$where=array_filter(Request::except([\'page\',\'limit\']));$limit=Request::param(\'limit\');$' . $model_class . '=new ' . $model_class . '();$data=$' . $model_class . '->where($where)->paginate($limit);return Msg::JSON(200,\'SUCCESS\',$data->toArray());');
 
         $class->addMethod('save')
             ->addComment('保存新建的资源.')
             ->addComment('@author Administrator')
             ->addComment('@return mixed')
             ->setPublic()
-            ->setBody('return $this->' . $tableName_public_name . '->save();')
-            ->addParameter('request')
-            ->setType(Request::class); // it will resolve to \Bar\OtherClass;
+            ->setBody('$' . $model_class . '=new ' . $model_class . '();$data=$' . $model_class . '->save(Request::param());if($data){return Msg::JSON(200,\'SUCCESS\');}return Msg::JSON(201,\'ERROR\');');
+
 
         $class->addMethod('read')
             ->addComment('显示指定的资源')
             ->addComment('@author Administrator')
             ->addComment('@return mixed')
             ->setPublic()
-            ->setBody('return $this->' . $tableName_public_name . '->read();')
-            ->addParameter('request')
-            ->setType(Request::class); // it will resolve to \Bar\OtherClass;
+            ->setBody('$' . $model_class . '=new ' . $model_class . '();$data=$' . $model_class . '->where(\'id\',Request::param(\'id\'))->find();return Msg::JSON(200,$data,\'SUCCESS\');');
 
-        $class->addMethod('edit')
-            ->addComment('显示编辑资源表单页')
-            ->addComment('@author Administrator')
-            ->addComment('@return mixed')
-            ->setPublic()
-            ->setBody('return $this->' . $tableName_public_name . '->edit();')
-            ->addParameter('request')
-            ->setType(Request::class); // it will resolve to \Bar\OtherClass;
 
         $class->addMethod('update')
             ->addComment('保存更新的资源')
             ->addComment('@author Administrator')
             ->addComment('@return mixed')
             ->setPublic()
-            ->setBody('return $this->' . $tableName_public_name . '->update();')
-            ->addParameter('request')
-            ->setType(Request::class); // it will resolve to \Bar\OtherClass;
+            ->setBody('$' . $model_class . '=new ' . $model_class . '();$data=$' . $model_class . '->where(\'id\',Request::param(\'id\'))->save(Request::except([\'id\']));if($data){return Msg::JSON(200,\'\',\'SUCCESS\');}return Msg::JSON(201,\'\',\'ERROR\');');
 
         $class->addMethod('delete')
             ->addComment('删除指定资源')
             ->addComment('@author Administrator')
             ->addComment('@return mixed')
             ->setPublic()
-            ->setBody('return $this->' . $tableName_public_name . '->delete();')
-            ->addParameter('request')
-            ->setType(Request::class); // it will resolve to \Bar\OtherClass;
+            ->setBody('$' . $model_class . '=new ' . $model_class . '();$data=$' . $model_class . '::destroy(Request::param(\'id\'));if($data){return Msg::JSON(200,\'\',\'SUCCESS\');}return Msg::JSON(201,\'\',\'ERROR\');');
+
 
         $dir = app_path() . $modular . '\\service';
 

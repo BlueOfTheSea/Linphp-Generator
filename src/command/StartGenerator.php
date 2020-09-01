@@ -2,6 +2,7 @@
 
 namespace Linphp\ServiceController\command;
 
+use Linphp\ServiceController\Msgee;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -29,6 +30,7 @@ class StartGenerator extends Command
      */
     protected function execute(Input $input, Output $output)
     {
+     
         $this->start($input->getArgument('name'));
         echo '格式化文件代码中...温馨提示php think gen 控制器名@类文件名 或 控制器名 如果文件存在是不会覆盖的亲~。';
         exec('composer fix-style');

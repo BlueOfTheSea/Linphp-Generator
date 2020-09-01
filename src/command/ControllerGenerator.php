@@ -54,13 +54,7 @@ class ControllerGenerator
             ->addComment('@return mixed')
             ->setPublic()
             ->setBody('return $this->' . $tableName_public_name . '->index();');
-
-        $class->addMethod('create')
-            ->addComment('显示创建资源表单页.')
-            ->addComment('@author Administrator')
-            ->addComment('@return mixed')
-            ->setPublic()
-            ->setBody('return $this->' . $tableName_public_name . '->create();');
+        
         $class->addMethod('save')
             ->addComment('保存新建的资源.')
             ->addComment('@author Administrator')
@@ -73,12 +67,6 @@ class ControllerGenerator
             ->addComment('@return mixed')
             ->setPublic()
             ->setBody('return $this->' . $tableName_public_name . '->read();');
-        $class->addMethod('edit')
-            ->addComment('显示编辑资源表单页')
-            ->addComment('@author Administrator')
-            ->addComment('@return mixed')
-            ->setPublic()
-            ->setBody('return $this->' . $tableName_public_name . '->edit();');
         $class->addMethod('update')
             ->addComment('保存更新的资源')
             ->addComment('@author Administrator')
