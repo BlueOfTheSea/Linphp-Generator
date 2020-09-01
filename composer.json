@@ -1,0 +1,37 @@
+{
+    "name": "linphp/servicecontroller",
+    "description": "PHP逻辑层与控制器生成工具",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.2",
+        "nette/php-generator": "^3.4"
+    },
+    "authors": [
+        {
+            "name": "houlinlin",
+            "email": "ymdhis@163.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Linphp\\ServiceController\\": "src"
+        }
+    },
+
+    "minimum-stability": "dev",
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    },
+    "extra": {
+        "think": {
+            "services": [
+                "Linphp\\ServiceController\\Service"
+            ],
+            "config": {}
+        }
+    }
+}
