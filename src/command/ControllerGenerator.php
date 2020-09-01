@@ -14,7 +14,7 @@ class ControllerGenerator
 {
 
     /**
-     * @param string $modular
+     * @param string $modular2
      * @param string $controller
      * @param string $tableName
      * @author Administrator
