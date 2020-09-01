@@ -1,6 +1,6 @@
 {
   "name": "linphp/servicecontroller",
-  "description": "PHP逻辑层与控制器生成工具",
+  "description": "基于thinkphp6写的PHP逻辑层,模型层,控制器层自动生成文件think脚本",
   "type": "library",
   "license": "MIT",
   "require": {
