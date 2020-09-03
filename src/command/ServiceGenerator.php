@@ -24,7 +24,7 @@ class ServiceGenerator
     {
         $file = new PhpFile;
         if ($tableName) {
-            $prefix     = config('database.connections.mysql.prefix');
+
             $annotation = Db::query("show table status");
             foreach ($annotation as $v) {
                 if ($tableName == $v['Name']) {
