@@ -37,13 +37,12 @@ class ServiceGenerator
         $tableName_public_name = $controller . 'Service';
         $file->setStrictTypes(); // adds declare(strict_types=1)
         $namespace = $file->addNamespace('app\\' . $modular . '\service');
-        $namespace->addUse('app\BaseController');
         $model_class = $controller . 'Model';
-        $namespace->addUse('app\index\model\\' . ucfirst($model_class));
+        $namespace->addUse('app\\'.$modular.'\model\\' . ucfirst($model_class));
         $namespace->addUse('\think\facade\Request');
         $namespace->addUse('\Linphp\Generator\notice\\Msg');
         $class = $namespace->addClass(ucfirst($tableName_public_name));
-        $class->addExtend(BaseController::class);
+        $class->addExtend('app\\'.$modular.'\\Service\\BaseService');
         #class内部注解
         $class->addMethod('index')
             ->addComment('显示资源列表')
@@ -91,6 +90,22 @@ class ServiceGenerator
         $path = $dir . '\\' . ucfirst($tableName_public_name) . '.php';
         if (!file_exists($path)) {
             echo '创建成功   ' . $path . "\n";
+            @file_put_contents($path, $file);
+        }
+        $this->baseservice($modular);
+    }
+    public function baseservice($modular='')
+    {
+        $file = new PhpFile;
+        $file->setStrictTypes(); // adds declare(strict_types=1)
+        $file->addComment("service公共类");
+        $namespace = $file->addNamespace('app\\' . $modular . '\service');
+        $namespace->addUse('app\BaseController');
+        $class = $namespace->addClass('BaseService');
+        $class->addExtend(BaseController::class);
+        $dir = app_path() . $modular . '\\service';
+        $path = $dir . '\\' .   'BaseService.php';
+        if (!file_exists($path)) {
             @file_put_contents($path, $file);
         }
     }
