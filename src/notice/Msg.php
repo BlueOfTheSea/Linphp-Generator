@@ -2,9 +2,6 @@
 
 namespace Linphp\Generator\notice;
 
-
-use think\response\Json;
-
 /**
  * Class MSG
  * @package Linphp\ServiceController\command
@@ -17,6 +14,6 @@ class Msg
         $msg_data['code'] = $code;
         $msg_data['msg']  = $msg;
         $msg_data['data'] = $data;
-        return json_encode($msg_data);
+        return json($msg_data);
     }
 }
