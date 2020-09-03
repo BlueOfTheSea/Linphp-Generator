@@ -36,7 +36,7 @@ class ControllerGenerator
         $file->setStrictTypes(); // adds declare(strict_types=1)
         $namespace = $file->addNamespace('app\\' . $modular . '\controller');
 
-        $namespace->addUse('app\\' . $modular . '\service\\' . $tableName_public_name);
+        $namespace->addUse('app\\' . $modular . '\service\\' . ucfirst($tableName_public_name));
         $namespace->addUse('think\annotation\Inject');
 
         $class = $namespace->addClass(ucfirst($controller));

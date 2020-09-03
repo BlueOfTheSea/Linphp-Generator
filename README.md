@@ -10,7 +10,7 @@ composer require linphp/generator
 ```
 
 
-generator使用说明
+generator使用说明 版本
 -----
 
 

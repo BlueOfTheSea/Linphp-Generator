@@ -45,8 +45,8 @@ class ModelGenerator
 
         #表不存在就集成普通的model
         if ($cc_format_is_table) {
-            $namespace->addUse('app\model\entity\\' . $class_name . 'Entity');
-            $class->addExtend('app\model\entity\\' . $class_name . 'Entity');
+            $namespace->addUse('app\model\entity\\' . ucfirst($class_name) . 'Entity');
+            $class->addExtend('app\model\entity\\' . ucfirst($class_name) . 'Entity');
         } else {
             $namespace->addUse('think\Model');
             $class->addExtend(Model::class);
