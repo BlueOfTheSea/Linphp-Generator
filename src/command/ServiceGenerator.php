@@ -24,7 +24,7 @@ class ServiceGenerator
     {
         $file = new PhpFile;
         if ($tableName) {
-            $prefix     = config('database.connections.mysql.prefix');
+
             $annotation = Db::query("show table status");
             foreach ($annotation as $v) {
                 if ($tableName == $v['Name']) {
@@ -41,7 +41,7 @@ class ServiceGenerator
         $model_class = $controller . 'Model';
         $namespace->addUse('app\index\model\\' . $model_class);
         $namespace->addUse('\think\facade\Request');
-        $namespace->addUse('\Linphp\ServiceController\notice\\Msg');
+        $namespace->addUse('\Linphp\Generator\notice\\Msg');
         $class = $namespace->addClass($tableName_public_name);
         $class->addExtend(BaseController::class);
         #class内部注解
