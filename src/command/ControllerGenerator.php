@@ -42,7 +42,7 @@ class ControllerGenerator
         $class = $namespace->addClass(ucfirst($controller));
 
         #class内部注解
- 
+
         $class->addProperty($tableName_public_name)
             ->addComment('@Inject()')
             ->addComment("@var " . $tableName_public_name);
@@ -53,7 +53,7 @@ class ControllerGenerator
             ->addComment('@return mixed')
             ->setPublic()
             ->setBody('return $this->' . $tableName_public_name . '->index();');
-        
+
         $class->addMethod('save')
             ->addComment('保存新建的资源.')
             ->addComment('@author Administrator')

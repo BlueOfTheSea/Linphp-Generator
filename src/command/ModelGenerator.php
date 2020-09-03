@@ -15,41 +15,39 @@ class ModelGenerator
 {
 
     /**
+     * @author Administrator
      * @param string $modular
      * @param string $controller
-     * @param string $tableName
-     * @author Administrator
+     *
      */
-    public function command($modular = '', $controller = '', $tableName = '')
+    public function command($modular = '', $controller = '')
     {
-        $file = new PhpFile;
-        $prefix     = config('database.connections.mysql.prefix');
-        $annotation = Db::query("show table status");
-        $class_name = $controller;
-        $cc_format=$prefix.lcfirst($this->cc_format($class_name));
-        $cc_format_is_table=false;
+        $file               = new PhpFile;
+        $prefix             = config('database.connections.mysql.prefix');
+        $annotation         = Db::query("show table status");
+        $class_name         = $controller;
+        $cc_format          = $prefix . lcfirst($this->cc_format($class_name));
+        $cc_format_is_table = false;
 
         foreach ($annotation as $v) {
 
             if ($cc_format == $v['Name']) {
                 $file->addComment($v['Comment']);
-                $cc_format_is_table=true;
+                $cc_format_is_table = true;
             }
         }
 
-        $namespace  = $file->addNamespace('app\\' . $modular . '\model');
+        $namespace  = $file->addNamespace('app\\' . ucfirst($modular) . '\model');
         $controller = $controller . 'Model';
         $file->setStrictTypes(); // adds declare(strict_types=1)
-        $class       = $namespace->addClass(ucfirst($controller));
-
+        $class = $namespace->addClass(ucfirst($controller));
 
 
         #表不存在就集成普通的model
-        if($cc_format_is_table)
-        {
+        if ($cc_format_is_table) {
             $namespace->addUse('app\model\entity\\' . $class_name . 'Entity');
             $class->addExtend('app\model\entity\\' . $class_name . 'Entity');
-        }else{
+        } else {
             $namespace->addUse('think\Model');
             $class->addExtend(Model::class);
         }
@@ -67,22 +65,24 @@ class ModelGenerator
 
 
     }
+
     #还原表明
-    public  function cc_format($name){
+    public function cc_format($name)
+    {
         $temp_array = array();
-        for($i=0;$i<strlen($name);$i++){
+        for ($i = 0; $i < strlen($name); $i++) {
             $ascii_code = ord($name[$i]);
-            if($ascii_code >= 65 && $ascii_code <= 90){
-                if($i == 0){
+            if ($ascii_code >= 65 && $ascii_code <= 90) {
+                if ($i == 0) {
                     $temp_array[] = chr($ascii_code + 32);
-                }else{
-                    $temp_array[] = '_'.chr($ascii_code + 32);
+                } else {
+                    $temp_array[] = '_' . chr($ascii_code + 32);
                 }
-            }else{
+            } else {
                 $temp_array[] = $name[$i];
             }
         }
-        return implode('',$temp_array);
+        return implode('', $temp_array);
     }
 
 
