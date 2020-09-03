@@ -10,12 +10,16 @@ composer require linphp/generator
 ```
 
 
-generator使用说明 版本
+generator
 -----
 
 
 
-```php
+```php 
+    每次执行命令除了app/model会初始化外,别的文件夹不用担心会初始化,已有文件不会初始化。
+    如果在linux上操作权限一定要给足,如果无法创建文件请检查用户权限
+    遇到问题,如有宝贵的建议邮箱联系我哦。
+    email： ymdhis@163.com
 命令1.  php think gen index  #根据数据表生成所有controller,service,model,的文件。
 命令2.  php think gen index@user #生成 index模块下的 user控制器文件 userService文件,model文件，
 命令3.  php think gen  #如果有修改数据表操作请执行此命令,重构app/model映射文件夹,保证映射表关系。
