@@ -49,20 +49,19 @@ class EntityModelGenerator
 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=? AND TABLE_SCHEMA=?',
                 [$tableName, $database]
             );
-            $file = new PhpFile;
+            $file    = new PhpFile;
             $file->setStrictTypes(); // adds declare(strict_types=1)
             $namespace = $file->addNamespace('app\model\entity');
             $namespace->addUse('think\Model');
-            $class = $namespace->addClass(ucfirst($tableNameVal.'Entity'));
+            $class  = $namespace->addClass(ucfirst($tableNameVal . 'Entity'));
             $schema = [];   // 设置模型的 schema 字段信息
             foreach ($columns as $v) {
 
-                if($v['COLUMN_KEY']=='PRI')
-                {
+                if ($v['COLUMN_KEY'] == 'PRI') {
                     $class->addProperty('pk', $v['COLUMN_NAME'])->setProtected();
                     $class->addProperty('table', $v['TABLE_NAME'])->setProtected();
                 }
-                $class->addComment('@property '.$this->checkType($v['DATA_TYPE'])." $".$v['COLUMN_NAME']." {$v['COLUMN_COMMENT']}");
+                $class->addComment('@property ' . $this->checkType($v['DATA_TYPE']) . " $" . $v['COLUMN_NAME'] . " {$v['COLUMN_COMMENT']}");
                 $schema[$v['COLUMN_NAME']] = $v['DATA_TYPE'];
             }
             $class->addProperty('schema', $schema)->setProtected();
@@ -71,9 +70,9 @@ FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=? AND TABLE_SCHEMA=?',
             if (!is_dir($dir)) {
                 mkdir($dir, 0777, true);
             }
-            $path = $dir . '\\' . ucfirst($tableNameVal.'Entity') . '.php';
+            $path = $dir . '\\' . ucfirst($tableNameVal . 'Entity') . '.php';
             @file_put_contents($path, $file);
-            echo '生成实体Model层'.$path."\n";
+            echo '生成实体Model层' . $path . "\n";
         }
     }
 

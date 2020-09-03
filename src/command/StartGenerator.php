@@ -18,19 +18,19 @@ class StartGenerator extends Command
     protected function configure()
     {
         $this->setName('gen')
-            ->addArgument('name', Argument::OPTIONAL, "your name")
-            ->setDescription('Say Hello');
+            ->addArgument('name', Argument::OPTIONAL)
+            ->setDescription('Auto generate file command');
     }
 
     /**
-     * @author Administrator
      * @param Input $input
      * @param Output $output
      * @return int|void|null
+     * @author Administrator
      */
     protected function execute(Input $input, Output $output)
     {
-     
+
         $this->start($input->getArgument('name'));
         echo '格式化文件代码中...温馨提示php think gen 控制器名@类文件名 或 控制器名 如果文件存在是不会覆盖的亲~。';
         exec('composer fix-style');
@@ -38,17 +38,20 @@ class StartGenerator extends Command
     }
 
     /**
-     * @author Administrator
      * @param $name
+     * @author Administrator
      */
     public function start($name)
     {
+        if (!$name) {
+            (new EntityModelGenerator())->command();
+            return;
+        }
 
-
-        $ServiceGenerator      = new ServiceGenerator();
-        $ModelGenerator        = new ModelGenerator();
-        $ControllerGenerator   = new ControllerGenerator();
-        $class_name = explode('@', $name);
+        $ServiceGenerator    = new ServiceGenerator();
+        $ModelGenerator      = new ModelGenerator();
+        $ControllerGenerator = new ControllerGenerator();
+        $class_name          = explode('@', $name);
 
         #初始化实体模型
         (new EntityModelGenerator())->command();
@@ -60,7 +63,7 @@ class StartGenerator extends Command
             #生成控制器
             $ControllerGenerator->command($class_name[0], $class_name[1]);
         } else {
-            $result                = Db::query('show tables');
+            $result = Db::query('show tables');
             foreach ($result as $k => $v) {
                 $tableName    = $v['Tables_in_' . config('database.connections.mysql.database')];
                 $prefix       = config('database.connections.mysql.prefix');

@@ -39,10 +39,10 @@ class ServiceGenerator
         $namespace = $file->addNamespace('app\\' . $modular . '\service');
         $namespace->addUse('app\BaseController');
         $model_class = $controller . 'Model';
-        $namespace->addUse('app\index\model\\' . $model_class);
+        $namespace->addUse('app\index\model\\' . ucfirst($model_class));
         $namespace->addUse('\think\facade\Request');
         $namespace->addUse('\Linphp\Generator\notice\\Msg');
-        $class = $namespace->addClass($tableName_public_name);
+        $class = $namespace->addClass(ucfirst($tableName_public_name));
         $class->addExtend(BaseController::class);
         #class内部注解
         $class->addMethod('index')
