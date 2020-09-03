@@ -1,8 +1,8 @@
 <?php
 
-namespace Linphp\ServiceController\command;
+namespace Linphp\Generator\command;
 
-use Linphp\ServiceController\Msgee;
+use Linphp\Generator\Msgee;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
