@@ -1,4 +1,4 @@
-Nette PHP Generator
+Nette PHP Generator  thinkphp v6.0.3 插件
 ===================
 
 
@@ -13,9 +13,8 @@ composer require linphp/generator
 generator
 -----
 
-
-
 ```php 
+    
     每次执行命令除了app/model会初始化外,别的文件夹不用担心会初始化,已有文件不会初始化。
     如果在linux上操作权限一定要给足,如果无法创建文件请检查用户权限
     遇到问题,如有宝贵的建议邮箱联系我哦。
@@ -24,7 +23,7 @@ generator
 命令2.  php think gen index@user #生成 index模块下的 user控制器文件 userService文件,model文件，
 命令3.  php think gen  #如果有修改数据表操作请执行此命令,重构app/model映射文件夹,保证映射表关系。
 提示:
-    1.正在使用generator时请配置好数据库,保证能正确连接。
+    1.执行命令前请配置好数据库,保证能正确连接。
     2.生成文件说明
         |--app
             |--index
