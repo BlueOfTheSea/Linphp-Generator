@@ -1,4 +1,4 @@
-Nette PHP Generator  thinkphp v6.0.3 插件
+Nette PHP Generator  
 ===================
 
 
@@ -10,7 +10,7 @@ composer require linphp/generator
 ```
 
 
-generator
+generator   --thinkphp v6.0.3 插件
 -----
 
 ```php 
