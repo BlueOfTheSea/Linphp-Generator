@@ -30,7 +30,7 @@
   "extra": {
     "think": {
       "services": [
-        "Linphp\\ServiceController\\Service"
+        "Linphp\\Generator\\Service"
       ],
       "config": {}
     }
