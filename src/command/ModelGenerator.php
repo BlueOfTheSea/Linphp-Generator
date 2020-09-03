@@ -37,7 +37,7 @@ class ModelGenerator
             }
         }
 
-        $namespace  = $file->addNamespace('app\\' . ucfirst($modular) . '\model');
+        $namespace  = $file->addNamespace('app\\' . $modular . '\model');
         $controller = $controller . 'Model';
         $file->setStrictTypes(); // adds declare(strict_types=1)
         $class = $namespace->addClass(ucfirst($controller));
