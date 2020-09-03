@@ -50,14 +50,14 @@ class ServiceGenerator
             ->addComment('@author Administrator')
             ->addComment('@return mixed')
             ->setPublic()
-            ->setBody('$where=array_filter(Request::except([\'page\',\'limit\']));$limit=Request::param(\'limit\');$' . $model_class . '=new ' . $model_class . '();$data=$' . $model_class . '->where($where)->paginate($limit);return Msg::JSON(200,\'SUCCESS\',$data->toArray());');
+            ->setBody('$where=array_filter(Request::except([\'page\',\'limit\']));$limit=Request::param(\'limit\');$' . $model_class . '=new ' . ucfirst($model_class) . '();$data=$' . $model_class . '->where($where)->paginate($limit);return Msg::JSON(200,\'SUCCESS\',$data->toArray());');
 
         $class->addMethod('save')
             ->addComment('保存新建的资源.')
             ->addComment('@author Administrator')
             ->addComment('@return mixed')
             ->setPublic()
-            ->setBody('$' . $model_class . '=new ' . $model_class . '();$data=$' . $model_class . '->save(Request::param());if($data){return Msg::JSON(200,\'SUCCESS\');}return Msg::JSON(201,\'ERROR\');');
+            ->setBody('$' . $model_class . '=new ' . ucfirst($model_class) . '();$data=$' . $model_class . '->save(Request::param());if($data){return Msg::JSON(200,\'SUCCESS\');}return Msg::JSON(201,\'ERROR\');');
 
 
         $class->addMethod('read')
@@ -65,7 +65,7 @@ class ServiceGenerator
             ->addComment('@author Administrator')
             ->addComment('@return mixed')
             ->setPublic()
-            ->setBody('$' . $model_class . '=new ' . $model_class . '();$data=$' . $model_class . '->where(\'id\',Request::param(\'id\'))->find();return Msg::JSON(200,$data,\'SUCCESS\');');
+            ->setBody('$' . $model_class . '=new ' . ucfirst($model_class) . '();$data=$' . $model_class . '->where(\'id\',Request::param(\'id\'))->find();return Msg::JSON(200,$data,\'SUCCESS\');');
 
 
         $class->addMethod('update')
@@ -73,14 +73,14 @@ class ServiceGenerator
             ->addComment('@author Administrator')
             ->addComment('@return mixed')
             ->setPublic()
-            ->setBody('$' . $model_class . '=new ' . $model_class . '();$data=$' . $model_class . '->where(\'id\',Request::param(\'id\'))->save(Request::except([\'id\']));if($data){return Msg::JSON(200,\'\',\'SUCCESS\');}return Msg::JSON(201,\'\',\'ERROR\');');
+            ->setBody('$' . $model_class . '=new ' . ucfirst($model_class) . '();$data=$' . $model_class . '->where(\'id\',Request::param(\'id\'))->save(Request::except([\'id\']));if($data){return Msg::JSON(200,\'\',\'SUCCESS\');}return Msg::JSON(201,\'\',\'ERROR\');');
 
         $class->addMethod('delete')
             ->addComment('删除指定资源')
             ->addComment('@author Administrator')
             ->addComment('@return mixed')
             ->setPublic()
-            ->setBody('$' . $model_class . '=new ' . $model_class . '();$data=$' . $model_class . '::destroy(Request::param(\'id\'));if($data){return Msg::JSON(200,\'\',\'SUCCESS\');}return Msg::JSON(201,\'\',\'ERROR\');');
+            ->setBody('$' . $model_class . '=new ' . ucfirst($model_class) . '();$data=$' . $model_class . '::destroy(Request::param(\'id\'));if($data){return Msg::JSON(200,\'\',\'SUCCESS\');}return Msg::JSON(201,\'\',\'ERROR\');');
 
 
         $dir = app_path() . $modular . '\\service';
