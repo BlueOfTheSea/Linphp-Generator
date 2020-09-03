@@ -1,6 +1,6 @@
 <?php
 
-namespace Linphp\ServiceController\command;
+namespace Linphp\Generator\command;
 
 use Nette\PhpGenerator\PhpFile;
 use think\console\input\Option;

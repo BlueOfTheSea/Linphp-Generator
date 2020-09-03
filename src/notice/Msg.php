@@ -1,6 +1,6 @@
 <?php
 
-namespace Linphp\ServiceController\notice;
+namespace Linphp\Generator\notice;
 
 
 use think\response\Json;

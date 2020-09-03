@@ -1,6 +1,6 @@
 <?php
-namespace Linphp\ServiceController;
-use Linphp\ServiceController\command\StartGenerator;
+namespace Linphp\Generator;
+use Linphp\Generator\command\StartGenerator;
 
 /**
  * Class Service
