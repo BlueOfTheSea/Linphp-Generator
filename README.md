@@ -1,4 +1,4 @@
-Nette PHP Generator
+Nette PHP Generator  thinkphp v6.0.3 插件
 ===================
 
 
@@ -13,9 +13,8 @@ composer require linphp/generator
 generator
 -----
 
-
-
 ```php 
+    
     每次执行命令除了app/model会初始化外,别的文件夹不用担心会初始化,已有文件不会初始化。
     如果在linux上操作权限一定要给足,如果无法创建文件请检查用户权限
     遇到问题,如有宝贵的建议邮箱联系我哦。
