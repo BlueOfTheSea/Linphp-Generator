@@ -2,6 +2,7 @@
 
 namespace Linphp\Generator\command;
 
+use app\BaseController;
 use Nette\PhpGenerator\PhpFile;
 use think\console\input\Option;
 use think\facade\Db;
@@ -35,12 +36,11 @@ class ControllerGenerator
 
         $file->setStrictTypes(); // adds declare(strict_types=1)
         $namespace = $file->addNamespace('app\\' . $modular . '\controller');
-
         $namespace->addUse('app\\' . $modular . '\service\\' . ucfirst($tableName_public_name));
         $namespace->addUse('think\annotation\Inject');
 
         $class = $namespace->addClass(ucfirst($controller));
-
+        $class->addExtend('app\\' . $modular . '\\controller\\' . 'Base');
         #class内部注解
 
         $class->addProperty($tableName_public_name)
@@ -82,7 +82,26 @@ class ControllerGenerator
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
+        $this->basecontroller($modular);
         $path = $dir . '\\' . ucfirst($controller) . '.php';
+        if (!file_exists($path)) {
+            echo '创建成功   ' . $path . "\n";
+            @file_put_contents($path, $file);
+        }
+    }
+
+    public function basecontroller($modular='')
+    {
+        $file = new PhpFile;
+        $file->setStrictTypes(); // adds declare(strict_types=1)
+        $file->addComment("controller公共类");
+        $namespace = $file->addNamespace('app\\' . $modular . '\controller');
+        $namespace->addUse('app\BaseController');
+        $class = $namespace->addClass('Base');
+        $class->addExtend(BaseController::class);
+        $class->addProperty('middleware',[])->setProtected();
+        $dir = app_path() . $modular . '\\controller';
+        $path = $dir . '\\' .   'Base.php';
         if (!file_exists($path)) {
             echo '创建成功   ' . $path . "\n";
             @file_put_contents($path, $file);
