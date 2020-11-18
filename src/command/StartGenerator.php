@@ -43,8 +43,11 @@ class StartGenerator extends Command
      */
     public function start($name)
     {
+        $dirEntity = app_path() . 'model\\entity';
+        if (is_dir($dirEntity)) {
+            $this->deldir($dirEntity);
+        }
         if (!$name) {
-            $this->deldir(app_path() . 'model\\entity');
             (new EntityModelGenerator())->command();
             return;
         }
@@ -64,23 +67,27 @@ class StartGenerator extends Command
             #生成控制器
             $ControllerGenerator->command($class_name[0], $class_name[1]);
         } else {
-            $result = Db::query('show tables');
+            $database = config('database.connections.mysql.database');
+            $result   = Db::query('SELECT table_name, table_comment FROM information_schema. TABLES WHERE table_schema = \'' . $database . '\' ORDER BY table_name;');
             foreach ($result as $k => $v) {
-                $tableName    = $v['Tables_in_' . config('database.connections.mysql.database')];
-                $prefix       = config('database.connections.mysql.prefix');
-                $prefixSum    = strlen($prefix); #字符串长度,准备裁剪数据表结构前缀
-                $str          = substr($tableName, $prefixSum);
-                $str_array    = explode('_', $str);
-                $tableNameVal = '';
-                for ($a = 0; $a < count($str_array); $a++) {
-                    $tableNameVal .= ucfirst($str_array[$a]);
+                if (substr($v['table_comment'], 0, 1) != '.') {
+                    $tableName    = $v['table_name'];
+                    $prefix       = config('database.connections.mysql.prefix');
+                    $prefixSum    = strlen($prefix); #字符串长度,准备裁剪数据表结构前缀
+                    $str          = substr($tableName, $prefixSum);
+                    $str_array    = explode('_', $str);
+                    $tableNameVal = '';
+                    for ($a = 0; $a < count($str_array); $a++) {
+                        $tableNameVal .= ucfirst($str_array[$a]);
+                    }
+                    #生成模型
+                    $ModelGenerator->command($class_name[0], $tableNameVal, $tableName);
+                    #生成Service
+                    $ServiceGenerator->command($class_name[0], $tableNameVal, $tableName);
+                    #生成控制器
+                    $ControllerGenerator->command($class_name[0], $tableNameVal, $tableName);
                 }
-                #生成模型
-                $ModelGenerator->command($class_name[0], $tableNameVal, $tableName);
-                #生成Service
-                $ServiceGenerator->command($class_name[0], $tableNameVal, $tableName);
-                #生成控制器
-                $ControllerGenerator->command($class_name[0], $tableNameVal, $tableName);
+
             }
         }
     }

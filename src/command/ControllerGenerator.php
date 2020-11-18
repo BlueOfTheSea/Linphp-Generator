@@ -90,7 +90,7 @@ class ControllerGenerator
         }
     }
 
-    public function basecontroller($modular='')
+    public function basecontroller($modular = '')
     {
         $file = new PhpFile;
         $file->setStrictTypes(); // adds declare(strict_types=1)
@@ -99,9 +99,9 @@ class ControllerGenerator
         $namespace->addUse('app\BaseController');
         $class = $namespace->addClass('Base');
         $class->addExtend(BaseController::class);
-        $class->addProperty('middleware',[])->setProtected();
-        $dir = app_path() . $modular . '\\controller';
-        $path = $dir . '\\' .   'Base.php';
+        $class->addProperty('middleware', [])->setProtected();
+        $dir  = app_path() . $modular . '\\controller';
+        $path = $dir . '\\' . 'Base.php';
         if (!file_exists($path)) {
             echo '创建成功   ' . $path . "\n";
             @file_put_contents($path, $file);
