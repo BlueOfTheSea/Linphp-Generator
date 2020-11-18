@@ -15,10 +15,10 @@ class ModelGenerator
 {
 
     /**
-     * @author Administrator
      * @param string $modular
      * @param string $controller
      *
+     * @author Administrator
      */
     public function command($modular = '', $controller = '')
     {
