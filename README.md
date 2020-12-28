@@ -1,4 +1,4 @@
-Nette PHP Generator  
+Linphp PHP Generator  
 ===================
 
 
