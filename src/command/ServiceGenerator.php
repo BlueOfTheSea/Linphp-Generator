@@ -61,10 +61,10 @@ class ServiceGenerator
             return SendMsg::jsonData($data);
         } catch (ValidateException $e) {
                 // 这是进行验证异常捕获
-             return json($e->getError());
+             return SendMsg::jsonThrow($e->getError());
         } catch (\Exception $e) {
                 // 这是进行异常捕获
-             return json($e->getMessage());
+             return SendMsg::jsonThrow($e->getMessage());
         }');
 
         $class->addMethod('save')
@@ -82,10 +82,10 @@ class ServiceGenerator
                 return SendMsg::jsonThrow("保存失敗");
             } catch (ValidateException $e) {
                 // 这是进行验证异常捕获
-                return json($e->getError());
+                return SendMsg::jsonThrow($e->getError());
             } catch (\Exception $e) {
                 // 这是进行异常捕获
-                return json($e->getMessage());
+                return SendMsg::jsonThrow($e->getMessage());
             }');
 
 
@@ -101,10 +101,10 @@ class ServiceGenerator
             return SendMsg::jsonData($data);
         } catch (ValidateException $e) {
             // 这是进行验证异常捕获
-            return json($e->getError());
+            return SendMsg::jsonThrow($e->getError());
         } catch (\Exception $e) {
             // 这是进行异常捕获
-            return json($e->getMessage());
+            return SendMsg::jsonThrow($e->getMessage());
         }');
 
 
@@ -123,10 +123,10 @@ class ServiceGenerator
             return SendMsg::jsonThrow("修改失敗");
         } catch (ValidateException $e) {
             // 这是进行验证异常捕获
-            return json($e->getError());
+            return SendMsg::jsonThrow($e->getError());
         } catch (\Exception $e) {
             // 这是进行异常捕获
-            return json($e->getMessage());
+            return SendMsg::jsonThrow($e->getMessage());
         }');
 
         $class->addMethod('delete')
@@ -145,10 +145,10 @@ class ServiceGenerator
             return SendMsg::jsonThrow("刪除失敗");
         } catch (ValidateException $e) {
             // 这是进行验证异常捕获
-            return json($e->getError());
+            return SendMsg::jsonThrow($e->getError());
         } catch (\Exception $e) {
             // 这是进行异常捕获
-            return json($e->getMessage());
+            return SendMsg::jsonThrow($e->getMessage());
         }');
 
 
