@@ -43,7 +43,7 @@ class StartGenerator extends Command
      */
     public function start($name)
     {
-        $dirEntity = app_path() . 'model\\entity';
+        $dirEntity = app_path() . 'model/entity';
         if (is_dir($dirEntity)) {
             $this->deldir($dirEntity);
         }

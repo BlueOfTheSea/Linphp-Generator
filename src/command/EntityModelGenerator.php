@@ -66,11 +66,11 @@ FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=? AND TABLE_SCHEMA=?',
             }
             $class->addProperty('schema', $schema)->setProtected();
             $class->addExtend(Model::class);
-            $dir = app_path() . 'model\\entity';
+            $dir = app_path() . 'model/entity';
             if (!is_dir($dir)) {
                 mkdir($dir, 0777, true);
             }
-            $path = $dir . '\\' . ucfirst($tableNameVal . 'Entity') . '.php';
+            $path = $dir . '/' . ucfirst($tableNameVal . 'Entity') . '.php';
             @file_put_contents($path, $file);
             echo '生成实体Model层' . $path . "\n";
         }

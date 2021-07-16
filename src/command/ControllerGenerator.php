@@ -78,12 +78,12 @@ class ControllerGenerator
             ->addComment('@return mixed')
             ->setPublic()
             ->setBody('return $this->' . $tableName_public_name . '->delete();');
-        $dir = app_path() . $modular . '\\controller';
+        $dir = app_path() . $modular . '/controller';
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
         $this->basecontroller($modular);
-        $path = $dir . '\\' . ucfirst($controller) . '.php';
+        $path = $dir . '/' . ucfirst($controller) . '.php';
         if (!file_exists($path)) {
             echo '创建成功   ' . $path . "\n";
             @file_put_contents($path, $file);
@@ -100,8 +100,8 @@ class ControllerGenerator
         $class = $namespace->addClass('Base');
         $class->addExtend(BaseController::class);
         $class->addProperty('middleware', [])->setProtected();
-        $dir  = app_path() . $modular . '\\controller';
-        $path = $dir . '\\' . 'Base.php';
+        $dir  = app_path() . $modular . '/controller';
+        $path = $dir . '/' . 'Base.php';
         if (!file_exists($path)) {
             echo '创建成功   ' . $path . "\n";
             @file_put_contents($path, $file);

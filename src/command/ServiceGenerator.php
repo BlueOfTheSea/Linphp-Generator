@@ -152,12 +152,12 @@ class ServiceGenerator
         }');
 
 
-        $dir = app_path() . $modular . '\\service';
+        $dir = app_path() . $modular . '/service';
 
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
-        $path = $dir . '\\' . ucfirst($tableName_public_name) . '.php';
+        $path = $dir . '/' . ucfirst($tableName_public_name) . '.php';
         if (!file_exists($path)) {
             echo '创建成功   ' . $path . "\n";
             @file_put_contents($path, $file);
@@ -174,8 +174,8 @@ class ServiceGenerator
         $namespace->addUse('app\BaseController');
         $class = $namespace->addClass('BaseService');
         $class->addExtend(BaseController::class);
-        $dir  = app_path() . $modular . '\\service';
-        $path = $dir . '\\' . 'BaseService.php';
+        $dir  = app_path() . $modular . '/service';
+        $path = $dir . '/' . 'BaseService.php';
         if (!file_exists($path)) {
             @file_put_contents($path, $file);
         }
