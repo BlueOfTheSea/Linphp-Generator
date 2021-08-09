@@ -5,7 +5,7 @@ namespace Linphp\Generator\command;
 use Nette\PhpGenerator\PhpFile;
 use think\console\input\Option;
 use think\facade\Db;
-use think\Model;
+use app\model\common\BaseEntity;
 
 /**
  * 初始化模型
@@ -52,7 +52,7 @@ FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=? AND TABLE_SCHEMA=?',
             $file    = new PhpFile;
             $file->setStrictTypes(); // adds declare(strict_types=1)
             $namespace = $file->addNamespace('app\model\entity');
-            $namespace->addUse('think\Model');
+            $namespace->addUse('app\model\common\BaseEntity');
             $class  = $namespace->addClass(ucfirst($tableNameVal . 'Entity'));
             $schema = [];   // 设置模型的 schema 字段信息
             foreach ($columns as $v) {
@@ -65,7 +65,7 @@ FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=? AND TABLE_SCHEMA=?',
                 $schema[$v['COLUMN_NAME']] = $v['DATA_TYPE'];
             }
             $class->addProperty('schema', $schema)->setProtected();
-            $class->addExtend(Model::class);
+            $class->addExtend(BaseEntity::class);
             $dir = app_path() . 'model/entity';
             if (!is_dir($dir)) {
                 mkdir($dir, 0777, true);
