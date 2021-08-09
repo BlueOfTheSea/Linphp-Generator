@@ -31,7 +31,9 @@ generator   --thinkphp v6.0.3 插件
                  |--model #自动生成的模型,sql语句可以在这里写。
                  |--service #自动生成的逻辑层代码,
             |--model  #此文件夹禁止修改文件
-                 |--entity #自动生成的映射模型,此文件夹下文件是对应所有数据表中的映射模型,禁止写入代码,每次使用php think gen index或index@user会重构结构表   
+                 |--entity #自动生成的映射模型,此文件夹下文件是对应所有数据表中的映射模型,禁止写入代码,每次使用php think gen index或index@user会重构结构表  
+                 |--common #此文件夹不会初始化,可以创建文件夹,文件与编写代码    
+                     |--BaseEntity.php  #处理公共Entity文件                                        
     3.如果表注释前边加. 使用php think gen index命令时注解的表不会被生成, 
     例如：
         a_user 表            表注解  .用户表
