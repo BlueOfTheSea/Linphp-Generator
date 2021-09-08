@@ -49,7 +49,7 @@ class StartGenerator extends Command
         }
         $dirEntity = app_path() . 'model/common';
         if (!is_dir($dirEntity)) {
-            mkdir($dirEntity);
+            mkdir($dirEntity, 0777, true);
             $tplEntity= dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR
                 . "tpl" . DIRECTORY_SEPARATOR;
             $BaseEntity = @file_get_contents($tplEntity . "/BaseEntity.tpl");
