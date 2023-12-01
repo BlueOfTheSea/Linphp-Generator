@@ -81,8 +81,8 @@ class StartGenerator extends Command
             $database = config('database.connections.mysql.database');
             $result   = Db::query('SELECT table_name, table_comment FROM information_schema. TABLES WHERE table_schema = \'' . $database . '\' ORDER BY table_name;');
             foreach ($result as $k => $v) {
-                if (substr($v['table_comment'], 0, 1) != '.') {
-                    $tableName    = $v['table_name'];
+                if (substr($v['TABLE_COMMENT'], 0, 1) != '.') {
+                    $tableName    = $v['TABLE_NAME'];
                     $prefix       = config('database.connections.mysql.prefix');
                     $prefixSum    = strlen($prefix); #字符串长度,准备裁剪数据表结构前缀
                     $str          = substr($tableName, $prefixSum);
